@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="True">
+        <record id="mb_partner" model="res.partner" context="{'default_is_company': True}">
+            <field name="name">MERCEDES BENZ</field>
+            <field name="company_id" eval="None"/>
+            <field name="is_company" eval="True"/>
+            <field name="street"></field>
+            <field name="city"></field>
+            <field name="zip"></field>
+            <field name="phone"></field>
+        </record>
+
+        <record id="byd_partner" model="res.partner" context="{'default_is_company': True}">
+            <field name="name">BYD</field>
+            <field name="company_id" eval="None"/>
+            <field name="is_company" eval="True"/>
+            <field name="street"></field>
+            <field name="city"></field>
+            <field name="zip"></field>
+            <field name="phone"></field>
+        </record>
+    </data>
+</odoo>

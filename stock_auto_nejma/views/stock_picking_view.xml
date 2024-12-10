@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="menu_picking_auto_nejma" name="Réceptions"
+                  action="stock.action_picking_tree_incoming"
+                  parent="core_auto_nejma.logistics_auto_nejma_menu"
+                  sequence="30"/>
+</odoo>

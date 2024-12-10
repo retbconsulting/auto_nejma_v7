@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="logistics_auto_nejma_menu_root"
+        name="Logistique"
+        web_icon="industry_fsm,static/description/icon.png"
+        active="True"
+        sequence="60">
+
+        <menuitem id="logistics_auto_nejma_menu"
+            name="Logistique"
+            sequence="10">
+        </menuitem>
+
+        <menuitem id="configuration_auto_nejma_menu"
+            name="Configuration"
+            sequence="20">
+        </menuitem>
+
+    </menuitem>
+</odoo>

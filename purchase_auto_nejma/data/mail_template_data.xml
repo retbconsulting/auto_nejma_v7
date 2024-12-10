@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="transitaire_new_notified" model="mail.template">
+            <field name="name">Notification Transitaire (Nouveau --> Notifié)</field>
+            <field name="email_from"/>
+            <field name="email_to">karamallah.lakhdar@eezee-it.com</field>
+            <field name="subject">Notification transitaire (Nouveau --> Notifié)</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>L'ordre de transit créé</p><br/>
+            </div></field>
+        </record>
+
+        <record id="autonejma_notified_recepted" model="mail.template">
+            <field name="name">Notification Auto Nejma (Notifié --> Récéptionné)</field>
+            <field name="email_from"/>
+            <field name="email_to">nazih.belhaj@eezee-it.com</field>
+            <field name="subject">Notification Auto Nejma (Notifié --> Récéptionné)</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Réception faite</p><br/>
+            </div></field>
+        </record>
+
+        <record id="autonejma_recepted_ticket" model="mail.template">
+            <field name="name">Notification Auto Nejma (Récéptionné --> Ticket de paiement)</field>
+            <field name="email_from"/>
+            <field name="email_to">nazih.belhaj@eezee-it.com</field>
+            <field name="subject">Notification Auto Nejma (Récéptionné --> Ticket de paiement)</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Ticket de paiement disponible</p><br/>
+            </div></field>
+        </record>
+
+        <record id="transitaire_ticket_payed" model="mail.template">
+            <field name="name">Notification Transitaire (Ticket de paiement --> Reçu de paiement)</field>
+            <field name="email_from"/>
+            <field name="email_to">karamallah.lakhdar@eezee-it.com,mohammed.ouchani@eezee-it.com</field>
+            <field name="subject">Notification Transitaire (Ticket de paiement --> Reçu de paiement)</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Le ticket e paiement est joint</p><br/>
+            </div></field>
+        </record>
+
+        <record id="autonejma_dedouaned" model="mail.template">
+            <field name="name">Notification Auto Nejma (Paiement reçu --> Dédouané)</field>
+            <field name="email_from"/>
+            <field name="email_to">nazih.belhaj@eezee-it.com</field>
+            <field name="subject">Notification Auto Nejma (Paiement reçu --> Dédouané)</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Dédouanement</p><br/>
+            </div></field>
+        </record>
+
+        <record id="autonejma_deliver_to_carrier" model="mail.template">
+            <field name="name">Notification Auto Nejma (Dédouané --> Remise au transporteur)</field>
+            <field name="email_from"/>
+            <field name="email_to">nazih.belhaj@eezee-it.com</field>
+            <field name="subject">Notification Auto Nejma (Dédouané --> Remise au transporteur)</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Remise au transporteur</p><br/>
+            </div></field>
+        </record>
+
+        <record id="autonejma_closed" model="mail.template">
+            <field name="name">Notification Auto Nejma (Remise au transporteur --> Clôturé)</field>
+            <field name="email_from"/>
+            <field name="email_to">nazih.belhaj@eezee-it.com</field>
+            <field name="subject">Notification Auto Nejma (Remise au transporteur --> Clôturé)</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Clôturé</p><br/>
+            </div></field>
+        </record>
+
+        <record id="mail_quality_failed" model="mail.template">
+            <field name="name">Notification avarie</field>
+            <field name="email_from"/>
+            <field name="email_to">mohammed.ouchani@eezee-it.com,karamallah.lakhdar@eezee-it.com</field>
+            <field name="subject">Notification avarie</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Avarie</p>
+                <img src="${'data:image/png;base64,%s' % object.picture}" style="width: 60px; height: 60px"/>
+                <br/>
+            </div></field>
+        </record>
+
+        <record id="mail_notify_sinistre" model="mail.template">
+            <field name="name">Notification sinistre</field>
+            <field name="email_from"/>
+            <field name="email_to">karamallah.lakhdar@eezee-it.com</field>
+            <field name="subject">Notification sinistre</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Veuillez trouvez ci-joint la liste des avaris (Arrivage N°):</p>
+                    <t t-out="object.lot_id.name or ''"></t>
+                <br/>
+            </div></field>
+        </record>
+
+    </data>
+</odoo>

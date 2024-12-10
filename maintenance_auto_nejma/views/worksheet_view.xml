@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="worksheet_template_view_form_inherit_product_category" model="ir.ui.view">
+        <field name="name">worksheet.template.form.inherit.product.category</field>
+        <field name="model">worksheet.template</field>
+        <field name="inherit_id" ref="worksheet.worksheet_template_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group//field[@name='color']" position="after">
+                <field name="product_categ" widget="many2many_tags" relation="product.category" string="Categorie de produit"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
