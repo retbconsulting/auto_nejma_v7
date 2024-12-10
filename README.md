@@ -1,0 +1,1 @@
+# auto_nejma_v6
