@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem
+        id="menu_in_invoices_auto_nejma"
+        name="Factures fournisseurs"
+        action="account.action_move_in_invoice_type"
+        parent="core_auto_nejma.logistics_auto_nejma_menu"
+        groups="base.group_user"
+        sequence="40"/>
+
+</odoo>

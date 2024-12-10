@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_quality_check_wizard_inherit_au_ne" model="ir.ui.view">
+        <field name="name">quality_check_wizard_inherit_au_ne</field>
+        <field name="model">quality.check.wizard</field>
+        <field name="inherit_id" ref="quality_control.view_quality_check_wizard"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='do_fail']" position="attributes">
+                <attribute name="invisible">measure_on == 'operation'</attribute>
+             </xpath>
+        </field>
+    </record>
+</odoo>

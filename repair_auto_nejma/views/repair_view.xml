@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="repair_view_form_auto_nejma" model="ir.ui.view">
+        <field name="name">repair.order.form.inherit.auto.nejma</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='under_warranty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lot_id']" position="attributes">
+                <attribute name="string">N° Chassis</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Timeline">
+                    <group>
+                        <group>
+                            <field name="picture" widget="image"/>
+                            <field name="date_sinistre"/>
+                            <field name="src_location_id"/>
+                            <field name="expert_id"/>
+                            <field name="w18_number"/>
+                            <field name="date_order"/>
+                            <field name="date_end"/>
+                            <field name="date_declaration_insurance"/>
+                            <field name="deadline_declaration"/>
+                            <field name="date_expertise"/>
+                            <field name="deadline_expertise"/>
+                            <field name="date_ffi_logistique"/>
+                            <field name="date_open_tec"/>
+                            <field name="deadline_open_tec"/>
+                            <field name="delay_open_tec"/>
+                            <field name="tec"/>
+                            <field name="date_receipt_quotation"/>
+                        </group>
+                        <group>
+                            <field name="date_send_quotation_expert"/>
+                            <field name="delay_remise_expert"/>
+                            <field name="date_accord"/>
+                            <field name="delay_acceptance"/>
+                            <field name="date_return_to_sav"/>
+                            <field name="date_cancel_indispo"/>
+                            <field name="delay_cancel_indispo"/>
+                            <field name="date_remise_invoice_insurance"/>
+                            <field name="state_insurance"/>
+                            <field name="last_notif"/>
+                            <field name="amount_reimbursed"/>
+                            <field name="date_payment"/>
+                            <field name="tva"/>
+                            <field name="vetuste"/>
+                            <field name="limit_bdg"/>
+                            <field name="franchise"/>
+                            <field name="delay_payment"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+             <xpath expr="//page[@name='parts']/field[@name='move_ids']/tree/field[@name='product_qty']" position="after">
+                 <field name="repair_estimation"/>
+             </xpath>
+            <xpath expr="//notebook" position="after">
+                 <field name="total_estimation"/>
+             </xpath>
+        </field>
+    </record>
+</odoo>

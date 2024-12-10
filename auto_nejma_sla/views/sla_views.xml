@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_route_form" model="ir.ui.view">
+            <field name="name">au.route.form</field>
+            <field name="model">au.route</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <!--<field name="name"/>-->
+                            <field name="destination_id"/>
+                            <field name="source_id"/>
+                            <field name="trajet" readonly="1"/>
+                            <field name="sla"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_route_tree" model="ir.ui.view">
+            <field name="name">au.route.tree</field>
+            <field name="model">au.route</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <!--<field name="name"/>-->
+                    <field name="destination_id"/>
+                    <field name="source_id"/>
+                    <field name="trajet"/>
+                    <field name="sla"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_route_search" model="ir.ui.view">
+            <field name="name">au.route.search</field>
+            <field name="model">au.route</field>
+            <field name="arch" type="xml">
+                <search>
+                    <!--<field name="name"/>-->
+                    <field name="destination_id"/>
+                    <field name="source_id"/>
+                    <field name="trajet"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('active','=',True)]"/>
+                </search>
+            </field>
+        </record>
+
+
+        <!--<record id="view_destination_form" model="ir.ui.view">
+            <field name="name">au.destination.form</field>
+            <field name="model">au.destination</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                        </group>
+                        <notebook>
+                            <page string="Routes">
+                                <field name="route_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_destination_tree" model="ir.ui.view">
+            <field name="name">au.destination.tree</field>
+            <field name="model">au.destination</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <menuitem id="menu_route_root"
+                  name="Route Management"
+                  sequence="10"/>
+
+
+        <record id="action_destination" model="ir.actions.act_window">
+            <field name="name">Destinations</field>
+            <field name="res_model">au.destination</field>
+            <field name="view_mode">tree,form</field>
+        </record>-->
+
+
+        <!--<menuitem id="menu_route_master"
+                  name="Master Data"
+                  parent="menu_route_root"
+                  sequence="10"/>-->
+
+        <record id="action_route" model="ir.actions.act_window">
+            <field name="name">Routes</field>
+            <field name="res_model">au.route</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="menu_route"
+                  name="SLA"
+                  parent="core_auto_nejma.configuration_auto_nejma_menu"
+                  action="action_route"
+                  sequence="10"/>
+
+        <!--<menuitem id="menu_destination"
+                  name="Sites"
+                  parent="core_auto_nejma.configuration_auto_nejma_menu"
+                  action="action_destination"
+                  sequence="20"/>-->
+
+
+        <record id="view_stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="route_id"/>
+                    <field name="route_sla"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="repair_view_picking_form_auto_nejma" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.auto.nejma</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='operations']/field/tree/field[@name='lot_ids']" position="attributes">
+                <attribute name="string">N° Chassis</attribute>
+            </xpath>
+            <xpath expr="//div[@class='o_td_label']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="picking_view_kanban_inherit_au_ne" model="ir.ui.view">
+        <field name="name">stock.picking.view.kanban.au_ne</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-esc='record.partner_id.value']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='json_popover']" position="after">
+                <field name="location_id"/> --> <field name="location_dest_id"/>
+            </xpath>
+            <xpath expr="//field[@name='picking_properties']" position="after">
+                <field name="origin"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_barcode.stock_picking_action_kanban" model="ir.actions.act_window">
+        <field name="context">{
+            'contact_display': 'partner_address',
+            'search_default_available': 1,
+            'search_default_to_do_transfers': 1,
+            'group_by': 'location_dest_id'
+        }</field>
+    </record>
+</odoo>

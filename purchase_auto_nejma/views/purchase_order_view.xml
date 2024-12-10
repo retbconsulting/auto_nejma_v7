@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="purchase_order_form_inh" model="ir.ui.view">
+        <field name="name">purchase.order.form.inh</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_rfq_send']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_rfq_send'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_rfq_send'][3]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='print_quotation']" position="replace">
+            </xpath>
+            <xpath expr="//button[@name='button_cancel']" position="replace">
+            </xpath>
+            <xpath expr="//button[@name='action_create_invoice']" position="replace">
+            </xpath>
+            <xpath expr="//button[@name='button_done']" position="replace">
+            </xpath>
+            <xpath expr="//button[@name='button_confirm']" position="attributes">
+                <attribute name="invisible">state != 'payment_received'</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_confirm']" position="attributes">
+                <attribute name="string">Dédouaner</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='confirm_reminder_mail']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_create_invoice']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_planned']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!--<xpath expr="//field[@name='picking_type_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>-->
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="processing_deadline"/>
+                <field name="type_ot"/>
+                <field name="incoterm_id" readonly="state == 'done'"/>
+                <field name="boat_name"/>
+                <field name="other_information"/>
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="goods_description"/>
+                <field name="delivered" invisible="1"/>
+                <field name="invoices_count"/>
+                <field name="dispatched_count"/>
+                <field name="attachment_payment" invisible="state not in ('payment_ticket', 'payment_received', 'purchase')"/>
+                <field name="attachment_ml" invisible="state not in ('payment_received', 'purchase')"/>
+                <field name="attachment_bad" invisible="state in ('draft', 'sent')"/>
+                <field name="attachment_importation" invisible="state != 'deliver_to_carrier'"/>
+                <field name="date_bad" invisible="state != 'notified'"/>
+                <field name="attachment_payment_ticket" invisible="state not in ('payment_ticket', 'payment_received', 'purchase')"/>
+                <field name="payment_number" invisible="state not in ('payment_ticket', 'payment_received', 'purchase')"/>
+                <field name="payment_amount" invisible="state not in ('payment_ticket', 'payment_received', 'purchase')"/>
+            </xpath>
+            <xpath expr="//div[@class='oe_title']" position="replace">
+            </xpath>
+            <xpath expr="//notebook/page[@name='purchase_delivery_invoice']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@name='products']" position="attributes">
+                <attribute name="string">Véhicules</attribute>
+            </xpath>
+            <!--<xpath expr="//notebook/page[@name='products']" position="after">
+                <page string="Documents">
+                    <group>
+                        <field name="attachment_invoice"/>
+                        <field name="attachment_packing_list"/>
+                        <field name="attachment_origin_certificate"/>
+                        <field name="attachment_bill_lading"/>
+                        <field name="attachment_receipt_bulletin"/>
+                        <field name="attachment_other"/>
+                    </group>
+                </page>
+            </xpath>-->
+
+            <xpath expr="//header" position="inside">
+                <button
+                        class="oe_stat_button"
+                        name="action_notify_stage"
+                        type="object"
+                        invisible="state != 'draft'"
+                        string="Envoyer"
+                />
+                <button
+                        class="oe_stat_button"
+                        name="action_bad_stage"
+                        type="object"
+                        invisible="state != 'notified'"
+                        string="Confirmer BAD"
+                />
+                <!--<button
+                        class="oe_stat_button"
+                        name="action_reception_stage"
+                        type="object"
+                        invisible="state != 'payment_received'"
+                        string="Dédouaner"
+                />-->
+                <button
+                        class="oe_stat_button"
+                        name="action_payment_ticket"
+                        type="object"
+                        invisible="state != 'bad'"
+                        string="Ticket de paiement"
+                />
+                <button
+                        class="oe_stat_button"
+                        name="action_payment_received"
+                        type="object"
+                        invisible="state != 'payment_ticket'"
+                        string="Paiement reçu"
+                />
+
+                <!--<button
+                        class="oe_stat_button"
+                        name="action_deliver_to_carrier"
+                        type="object"
+                        invisible="state != 'dedouaned'"
+                        string="Remise au transporteur"
+                />-->
+
+                <button
+                        class="oe_stat_button"
+                        name="action_closed"
+                        type="object"
+                        invisible="state != 'deliver_to_carrier'"
+                        string="Clôturer"
+                />
+
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button type="object" name="action_view_vehicle" class="oe_stat_button" icon="fa-truck" invisible="vehicle_count == 0">
+                    <field name="vehicle_count" widget="statinfo" string="Véhicules" help="Incoming Shipments"/>
+                </button>
+            </xpath>
+            <field name="state" position="replace">
+                <field name="state" widget="statusbar"
+                       statusbar_visible="draft,notified,bad,payment_ticket,payment_received,purchase,recepted,deliver_to_carrier,closed"
+                       options="{'clickable': '1'}"
+                       readonly="1"/>
+            </field>
+
+            <field name="partner_id" position="before">
+                <field name="arrival_doc_id"/>
+            </field>
+             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="before">
+                <field name="vsb_number"/>
+             </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                <field name="received" optional="show"/>
+                <field name="order_number" optional="show"/>
+                <field name="vin_number" optional="show"/>
+                <field name="engine_number" optional="show"/>
+                <field name="bm" optional="show"/>
+                <field name="length" optional="show"/>
+                <field name="width" optional="show"/>
+                <field name="height" optional="show"/>
+                <field name="weight" optional="show"/>
+                <field name="fuel" optional="show"/>
+                <field name="traking_number" optional="show"/>
+                <field name="date" optional="show"/>
+                <field name="invoice_number" optional="show"/>
+                <field name="invoice_date" optional="show"/>
+                <field name="attachment_invoice" optional="show"/>
+                <button name="action_display_invoice" type="object" string="Consulter" class="btn btn-link" icon="oi-arrow-right"/>
+             </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='taxes_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/button[@name='action_purchase_history']" position="replace">
+            </xpath>
+            <xpath expr="//group[@class='oe_subtotal_footer']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_qty']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_form_au_ne" model="ir.ui.view">
+        <field name="name">purchase.order.form.inh</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_ref" position="replace">
+                <field name="arrival_doc_id"/>
+                <field name="partner_ref" optional="show"/>
+            </field>
+            <field name="amount_total" position="replace">
+            </field>
+            <field name="origin" position="after">
+                <field name="vehicle_count"/>
+                <field name="invoices_count"/>
+            </field>
+
+            <field name="origin" position="replace">
+            </field>
+            <field name="name" position="replace">
+            </field>
+            <field name="company_id" position="replace">
+            </field>
+            <field name="partner_ref" position="attributes">
+                <attribute name="string">Référence</attribute>
+            </field>
+            <field name="user_id" position="attributes">
+                <attribute name="string">Responsable</attribute>
+            </field>
+            <field name="date_order" position="attributes">
+                <attribute name="string">Echéance</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="purchase_order_stock_view_form_au_ne" model="ir.ui.view">
+        <field name="name">purchase.order.form.inh</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_picking']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_product_forecast_report']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_product_forecast_report'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_arrivals" name="Arrivages"
+              action="document_action_auto_nejma"
+              parent="core_auto_nejma.logistics_auto_nejma_menu"
+              sequence="10"/>
+
+    <record id="purchase_order_search_not_closed_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.list.select.inherit.not_closed</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='approved']" position="after">
+                <filter name="not_closed" string="Non clôturés" domain="[('state', '!=', 'closed')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_rfq_auto_nejma" model="ir.actions.act_window">
+            <field name="name">Ordres de transit</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+            <field name="view_id" ref="purchase.purchase_order_kpis_tree"/>
+            <field name="domain">[]</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="context">{'quotation_only': True, 'search_default_not_closed': 1, 'group_by': 'state'}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No request for quotation found. Let's create one!
+              </p><p>
+                Requests for quotation are documents that will be sent to your suppliers to request prices for different products you consider buying.
+                Once an agreement has been found with the supplier, they will be confirmed and turned into purchase orders.
+              </p>
+            </field>
+        </record>
+
+    <menuitem id="menu_ot" name="Ordres de transit"
+              action="purchase_rfq_auto_nejma"
+              parent="core_auto_nejma.logistics_auto_nejma_menu"
+              sequence="20"/>
+
+    <record id="generate_internal_pickings" model="ir.actions.server">
+        <field name="name">Générer les transferts</field>
+        <field name="model_id" ref="purchase.model_purchase_order_line"/>
+        <field name="binding_model_id" ref="purchase.model_purchase_order_line"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.generate_internal_pickings()
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="location_open_quants_auto_nejma"> <!-- Used in location -->
+        <field name="context">{}</field>
+        <field name="domain">[('location_id.scrap_location', '=', True)]</field>
+        <field name="name">Avaries</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_id" ref="stock.view_stock_quant_tree_simple"/>
+
+    </record>
+
+    <menuitem id="menu_avarie" name="Avaries"
+              action="location_open_quants_auto_nejma"
+              parent="core_auto_nejma.logistics_auto_nejma_menu"
+              sequence="60"/>
+
+
+    <record id="action_purchase_batch_notify" model="ir.actions.server">
+        <field name="name">Notifier le transitaire</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name='groups_id' eval="[(4, ref('base.group_user'))]"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.action_notify_stage()
+        </field>
+    </record>
+
+</odoo>

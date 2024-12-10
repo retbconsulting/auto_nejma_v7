@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="notify_sinistre_pickings" model="ir.actions.server">
+        <field name="name">Notifier sinistre</field>
+        <field name="model_id" ref="stock.model_stock_quant"/>
+        <field name="binding_model_id" ref="stock.model_stock_quant"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.send_notification()
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_quant_tree_editable_au_nejma">
+        <field name="name">stock.quant.tree.editable.auto.nejma</field>
+        <field name="model">stock.quant</field>
+        <field eval="5" name="priority"/>
+        <field name="arch" type="xml">
+            <tree editable="bottom"
+                  create="1" edit="1" js_class="inventory_report_list"
+                  sample="1">
+                <header>
+                    <button name="action_stock_quant_relocate" string="Transférer" type="object" groups="stock.group_stock_manager" invisible="context.get('hide_location', False)" context="{'action_ref': 'stock.action_view_quants'}"/>
+                </header>
+                <field name="create_date" column_invisible="True"/>
+                <field name="write_date" column_invisible="True"/>
+                <field name="id" column_invisible="True"/>
+                <field name="tracking" column_invisible="True"/>
+                <field name="company_id" column_invisible="True"/>
+                <field name="location_id"
+                       column_invisible="context.get('hide_location', False)"
+                       readonly="id"
+                       options="{'no_create': True}"/>
+                <field name="dest_location_id"
+                       readonly="1"
+                       options="{'no_create': True}"/>
+                <field name="storage_category_id" optional="hide"/>
+                <field name="product_id"
+                       readonly="context.get('single_product', False) or id" force_save="1"
+                       options="{'no_create': True}" widget="many2one"/>
+                <field name="product_categ_id" optional="hide"/>
+                <field name='company_id' groups="base.group_multi_company" optional="hidden"/>
+                <field name="package_id" groups="stock.group_tracking_lot"
+                       readonly="id"/>
+                <field name="lot_id" groups="stock.group_production_lot"
+                       column_invisible="context.get('hide_lot', False)"
+                       readonly="id or tracking not in ['serial', 'lot']"
+                       context="{'default_product_id': product_id, 'default_company_id': company_id}"/>
+                <field name="owner_id" groups="stock.group_tracking_owner"
+                       readonly="id"
+                       options="{'no_create': True}"/>
+                <!--<field name="inventory_quantity_auto_apply" string="On Hand Quantity" readonly="0" sum="Total On Hand"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="dashboard_open_quants_auto_nejma"> <!-- Used in dashboard -->
+        <field name="name">Transférer</field>
+        <field name="context">{'search_default_internal_loc': 1}</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_id" ref="view_stock_quant_tree_editable_au_nejma"/>
+    </record>
+
+    <menuitem
+        id="menu_internal_transferts_auto_nejma"
+        name="Transferts internes"
+        action="dashboard_open_quants_auto_nejma"
+        parent="core_auto_nejma.logistics_auto_nejma_menu"
+        groups="base.group_user"
+        sequence="30"/>
+
+</odoo>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="maintenance_request_view_form_inherit_au_ne" model="ir.ui.view">
+        <field name="name">maintenance.request.view.form.inherit.worksheet</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='schedule_date']" position="after">
+                <field name="type" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="readonly">type=='pdi'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--<record id="maintenance_request_view_tree_inherit_au_ne" model="ir.ui.view">
+        <field name="name">maintenance.request.view.tree.inherit.worksheet</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="equipment_id"/>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>-->
+
+    <record id="maintenance_request_view_calendar_inherit_au_ne" model="ir.ui.view">
+        <field name="name">maintenance.request.view.form.inherit.worksheet</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="//calendar" position="attributes">
+                <attribute name="quick_create">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="maintenance_requests_view_gantt" model="ir.ui.view">
+        <field name="name">maintenance.requests.view.gantt</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+            <gantt js_class="attendance_gantt" date_start="schedule_date" date_stop="schedule_date" string="Days" color="color" default_group_by="user_id" default_scale="month" precision="{'day': 'hour:quarter', 'week': 'day:full', 'month': 'day:quarter'}" plan="0" progress="duration" progress_bar="maintenance_team_id">
+                <field name="name"/>
+            </gantt>
+        </field>
+    </record>
+
+    <record id="action_maintenance_requests_au_ne" model="ir.actions.act_window">
+        <field name="name">PDI</field>
+        <field name="res_model">maintenance.request</field>
+        <field name="view_mode">calendar,gantt,kanban,tree,form,pivot,graph,activity</field>
+        <field name="domain">[('type', '=', 'pdi')]</field>
+        <field name="view_id" ref="maintenance.hr_equipment_view_calendar"/>
+        <field name="context">{
+            'search_default_type': 'pdi',
+            'default_type': 'pdi',
+            'default_user_id': uid,
+            'default_name': 'PDI',
+            'default_duration': 4
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new maintenance request
+            </p>
+            <p>
+                Follow the process of the request and communicate with the collaborator.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_custom_maintenance_requests"
+        name="PDI"
+        action="action_maintenance_requests_au_ne"
+        parent="core_auto_nejma.logistics_auto_nejma_menu"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="100"/>
+
+</odoo>

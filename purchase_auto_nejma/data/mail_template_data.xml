@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="transitaire_new_notified" model="mail.template">
+            <field name="name">[AN] : Notification établissement OT</field>
+            <field name="email_from"/>
+            <field name="email_to"/>
+            <field name="subject">[AN] : Notification établissement OT</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Veuillez trouver ci-joint l’OT suivant, relatif aux véhicules embarqués sur le bateau <t t-out="object.boat_name.name or ''"/> prévu d’arriver au port de Casablanca vers le <t t-out="object.arrival_doc_id.arrival_date or ''" t-options='{"widget": "date","format": "dd/MM/yyyy"}'/> :</p>
+                <p>- <t t-out="object.partner_ref or ''"/></p>
+                <p>Cordialement.</p>
+            </div></field>
+        </record>
+
+        <record id="autonejma_recepted_ticket" model="mail.template">
+            <field name="name">[AN] : Envoi ticket de paiement</field>
+            <field name="email_from"/>
+            <field name="email_to"/>
+            <field name="subject">[AN] : Envoi ticket de paiement</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Merci de trouver ci-joint le ticket de paiement de l' <t t-out="object.partner_ref or ''"/> du <t t-out="object.arrival_doc_id.arrival_date or ''" t-options='{"widget": "date","format": "dd/MM/yyyy"}'/> embarqués sur le navire <t t-out="object.boat_name.name or ''"/>.</p>
+                <p>Cordialement.</p>
+
+            </div></field>
+        </record>
+
+        <record id="transitaire_ticket_payed" model="mail.template">
+            <field name="name">[AN] : Envoi reçu de paiement</field>
+            <field name="email_from"/>
+            <field name="email_to"/>
+            <field name="subject">[AN] : Envoi reçu de paiement</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Le reçu de paiement relatif à l'OT <t t-out="object.partner_ref or ''"/> du <t t-out="object.arrival_doc_id.arrival_date or ''" t-options='{"widget": "date","format": "dd/MM/yyyy"}'/> est disponible.</p>
+                <p>Bien à vous,</p>
+            </div></field>
+        </record>
+
+        <record id="autonejma_dedouaned" model="mail.template">
+            <field name="name">[AN] : Dédouanement</field>
+            <field name="email_from"/>
+            <field name="email_to"/>
+            <field name="subject">[AN] : Dédouanement</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Nous vous informons que l’OT <t t-out="object.partner_ref or ''"/> du <t t-out="object.arrival_doc_id.arrival_date or ''" t-options='{"widget": "date","format": "dd/MM/yyyy"}'/> a été dédouané avec succès.</p>
+                    <p>N’hésitez pas à nous contacter si vous avez besoin d’informations supplémentaires ou d’une assistance particulière.</p>
+                    <p>Cordialement,</p><br/>
+            </div></field>
+        </record>
+
+        <record id="autonejma_notified_recepted" model="mail.template">
+            <field name="name">[AN] : Réception</field>
+            <field name="email_from"/>
+            <field name="email_to"/>
+            <field name="subject">[AN] : Réception</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Nous vous informons que l’OT <t t-out="object.partner_ref or ''"/> du <t t-out="object.arrival_doc_id.arrival_date or ''" t-options='{"widget": "date","format": "dd/MM/yyyy"}'/> a été réceptionné au niveau du PORT.</p>
+                    <p>N’hésitez pas à nous contacter si vous avez besoin d’informations supplémentaires ou d’une assistance particulière.</p>
+                    <p>Cordialement,</p>
+            </div></field>
+        </record>
+
+        <record id="autonejma_deliver_to_carrier" model="mail.template">
+            <field name="name">[AN] : Remise au transporteur</field>
+            <field name="email_from"/>
+            <field name="email_to"/>
+            <field name="subject">[AN] : Remise au transporteur</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                    <p>Nous vous informons que les numéros de châssis suivants ont été remises au transporteur:</p>
+                    <ul>
+                        <li t-foreach="object.move_line_ids" t-as="move">
+                            <li>
+                                <t t-out="move.product_id.name or ''"/> - <t t-out="move.lot_id.name or ''"/>
+                            </li>
+                        </li>
+                    </ul>
+                    <p>Nous restons disponibles pour toute question ou information complémentaire.</p>
+                    <p>Cordialement,</p><br/>
+            </div></field>
+        </record>
+
+        <record id="autonejma_closed" model="mail.template">
+            <field name="name">[AN] : OT Clôturé</field>
+            <field name="email_from"/>
+            <field name="email_to"/>
+            <field name="subject">[AN] : OT Clôturé</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                    <p>Nous vous informons que le dossier de l' <t t-out="object.partner_ref or ''"/> du <t t-out="object.arrival_doc_id.arrival_date or ''" t-options='{"widget": "date","format": "dd/MM/yyyy"}'/> a été clôturé avec succès .</p>
+<p>Toutes les étapes prévues ont été réalisées, et les documents ou informations nécessaires ont été transmis. Si vous avez des questions ou nécessitez des informations complémentaires à ce sujet, n’hésitez pas à nous contacter.</p>
+<p>Nous restons à votre disposition pour tout autre besoin.</p>
+<p>Cordialement,</p><br/>
+            </div></field>
+        </record>
+
+        <record id="mail_quality_failed" model="mail.template">
+            <field name="name">Notification avarie</field>
+            <field name="email_from"/>
+            <field name="email_to">mohammed.ouchani@eezee-it.com,karamallah.lakhdar@eezee-it.com</field>
+            <field name="subject">Notification avarie</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Avarie</p>
+                <img src="${'data:image/png;base64,%s' % object.picture}" style="width: 60px; height: 60px"/>
+                <br/>
+            </div></field>
+        </record>
+
+        <record id="mail_notify_sinistre" model="mail.template">
+            <field name="name">Notification sinistre</field>
+            <field name="email_from"/>
+            <field name="email_to">karamallah.lakhdar@eezee-it.com</field>
+            <field name="subject">Notification sinistre</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Veuillez trouvez ci-joint la liste des avaris (Arrivage N°):</p>
+                    <t t-out="object.lot_id.name or ''"></t>
+                <br/>
+            </div></field>
+        </record>
+
+        <record id="dispatch_notification_logistic" model="mail.template">
+            <field name="name">Notification Logistique depuis le dispatch</field>
+            <field name="email_from"/>
+            <field name="email_to">mohammed.ouchani@eezee-it.com</field>
+            <field name="subject">Dispatch --> Logistique</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Bonjour,</p>
+                <p>Notification Logistique pols</p><br/>
+            </div></field>
+        </record>
+
+
+    </data>
+</odoo>

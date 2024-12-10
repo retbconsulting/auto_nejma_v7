@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_wiz_import_ot_form" model="ir.ui.view">
+        <field name="name">wiz.import.ot.form</field>
+        <field name="model">wiz.import.ot</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>Charger Votre Fichier ici
+                    <field name="file_id"  filename="filename"/>
+                    <field name="filename"  invisible="1"/>
+                </p>
+                <footer>
+                    <button class="btn btn-sm btn-primary" name="action_import_ot"
+                            string="Importer" type="object"/>
+                    <button class="btn btn-sm btn-default" special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="wiz_import_ot_action" model="ir.actions.act_window">
+        <field name="name">Importer OT</field>
+        <field name="res_model">wiz.import.ot</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_wiz_import_ot_form"/>
+        <field name="target">new</field>
+    </record>
+    <menuitem action="wiz_import_ot_action" id="menu_wiz_import_ot"
+              parent="purchase.menu_procurement_management"/>
+</odoo>

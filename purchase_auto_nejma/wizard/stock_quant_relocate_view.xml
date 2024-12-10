@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_quant_relocate_inherit_au_ne" model="ir.ui.view">
+        <field name="name">stock.quant.relocate.au.ne</field>
+        <field name="model">stock.quant.relocate</field>
+        <field name="inherit_id" ref="stock.stock_quant_relocate_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='dest_location_id']" position="attributes">
+                <attribute name="string">Destination</attribute>
+             </xpath>
+            <xpath expr="//field[@name='message']" position="attributes">
+                <attribute name="invisible">1</attribute>
+             </xpath>
+        </field>
+    </record>
+</odoo>
