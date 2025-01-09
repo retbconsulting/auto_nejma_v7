@@ -124,7 +124,9 @@ class StockPicking(models.Model):
 
     def button_validate(self):
         for picking in self:
+            print ("1")
             super(StockPicking, self).button_validate()
+            print("2")
             if picking.origin:
                 po = self.env['purchase.order'].search([('name', '=', picking.origin)], limit=1)
                 if po:

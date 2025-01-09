@@ -87,11 +87,11 @@
                 <p>Bonjour,</p>
                     <p>Nous vous informons que les numéros de châssis suivants ont été remises au transporteur:</p>
                     <ul>
-                        <li t-foreach="object.move_line_ids" t-as="move">
+                        <t t-foreach="object.move_line_ids" t-as="move">
                             <li>
                                 <t t-out="move.product_id.name or ''"/> - <t t-out="move.lot_id.name or ''"/>
                             </li>
-                        </li>
+                        </t>
                     </ul>
                     <p>Nous restons disponibles pour toute question ou information complémentaire.</p>
                     <p>Cordialement,</p><br/>
